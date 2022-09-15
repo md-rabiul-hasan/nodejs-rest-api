@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const authRouter = require("./app/routes/auth.routes");
 
 const app = express();
 
@@ -22,22 +23,15 @@ app.use(bodyParser.urlencoded({
 const db = require("./app/models");
 const Role = db.role;
 
-db.sequelize.sync({ force: true}).then(() => {
+db.sequelize.sync({alter: true}).then(() => {
     console.log("Drop and Resync DB");
-    initial();
-});
-
-// simple route 
-app.get("/", (req, res) => {
-    res.json({
-        message: "Hello from Node.js"
-    })
+    // initial();
 });
 
 // routes 
-// require('./app/routes/auth.routes')(app);
-// require('./app/routes/user.routes')(app);
-// require('./app/routes/property.routes')(app);
+app.use("/api/user", authRouter);
+
+
 
 // set port, listen for request
 const PORT = 8081;

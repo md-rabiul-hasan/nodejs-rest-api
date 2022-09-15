@@ -3,7 +3,7 @@ const config = require("./../config/auth.config");
 const User = db.user;
 const Role = db.role;
 
-const op = db.Sequelize.Op;
+const Op = db.Sequelize.Op;
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -68,7 +68,7 @@ exports.singin = (req, res) => {
                 message: "Invalid password"
             })
         }
-        var token = jwt.sing({ id: user.id }, config.secret, {
+        var token = jwt.sign({ id: user.id }, config.secret, {
             expiresIn: config.expiration
         });
 
