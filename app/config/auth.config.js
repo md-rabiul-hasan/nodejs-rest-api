@@ -1,3 +1,4 @@
 module.exports = {
-    secret: "nodejs-jwt"
+    secret: "nodejs-jwt",
+    expiration: 86400 // 24 hours
 }
