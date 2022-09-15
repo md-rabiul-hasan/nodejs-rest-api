@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Property = sequelize.define({
+    const Property = sequelize.define("properties", {
         property_name: {
             type: Sequelize.STRING,
         },
