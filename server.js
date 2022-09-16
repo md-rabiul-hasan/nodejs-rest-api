@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const authRouter = require("./app/routes/auth.routes");
+const propertyRouter = require("./app/routes/property.routes");
 
 const app = express();
 
@@ -23,13 +24,14 @@ app.use(bodyParser.urlencoded({
 const db = require("./app/models");
 const Role = db.role;
 
-db.sequelize.sync({alter: true}).then(() => {
+db.sequelize.sync({ alter: true }).then(() => {
     console.log("Drop and Resync DB");
-    // initial();
+    //initial();
 });
 
 // routes 
 app.use("/api/user", authRouter);
+app.use("/api/poperty", propertyRouter);
 
 
 

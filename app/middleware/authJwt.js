@@ -3,13 +3,17 @@ const config = require("./../config/auth.config");
 const db = require("./../models");
 const User = db.user;
 
-verifyToken = (req, res, next) => {
-    let token = req.headers["x-access-token"];
+exports.verifyToken = (req, res, next) => {
+    console.log(req.headers)
+    let token = req.headers["x-access-token"] || req.headers.authorization;
+    
     if(!token){
         return res.status(403).send({
             message: "No token provided",
         });
     }
+    let token_array = token.split(" ");
+    token = token_array[1];
 
     jwt.verify(token, config.secret, (err, decoded) => {
         
@@ -27,7 +31,7 @@ verifyToken = (req, res, next) => {
     });
 }
 
-isAdmin = (req, res, next) => {
+exports.isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
             for(let i=0; i < roles.length; i++){
@@ -44,10 +48,3 @@ isAdmin = (req, res, next) => {
         });
     });
 }
-
-const authJwt = {
-    verifyToken: verifyToken,
-    isAdmin: isAdmin,
-}
-
-module.exports = authJwt;
