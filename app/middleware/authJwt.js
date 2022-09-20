@@ -4,7 +4,6 @@ const db = require("./../models");
 const User = db.user;
 
 exports.verifyToken = (req, res, next) => {
-    console.log(req.headers)
     let token = req.headers["x-access-token"] || req.headers.authorization;
     
     if(!token){
