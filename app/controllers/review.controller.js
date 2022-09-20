@@ -2,6 +2,7 @@ const db = require("./../models");
 const validator = require("./../helper/validate");
 const Op = db.Sequelize.Op;
 const Review = db.review;
+const Product = db.product;
 
 
 // Retrive all Property from the database
@@ -65,7 +66,13 @@ exports.store = async (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Review.findByPk(id)
+    Review.findOne({
+        include:[{
+            model: Product,
+            as: 'product'
+        }],
+        where: {id: id}
+    })
     .then( data => {
         res.send(data);
     })

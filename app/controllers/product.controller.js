@@ -8,7 +8,12 @@ const Review = db.review;
 // Retrive all Property from the database
 exports.findAll = (req, res) => {
    
-    Product.findAll()
+    Product.findAll({
+        include:[{
+            model: Review,
+            as: 'reviews'
+        }]
+    })
     .then( data => {
         res.send(data);
     })
